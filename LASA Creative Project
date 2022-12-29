@@ -1,0 +1,110 @@
+# Imports
+import cv2
+import os
+from threading import Thread
+
+isUsed = True
+
+# Introduction to the program
+print("Hello! I'm Rohan, the creator of this project.")
+print("I would like to welcome you into my world: the World of Rohan!")
+print("What would you like to know about me?")
+
+# Function for playing the video and audio
+def video_audio(video, audio):
+    cap = cv2.VideoCapture(video)
+    # Audio
+    def music():
+        os.system("afplay " + audio)
+    # Video
+    def vid():
+        while (cap.isOpened()):
+            ret, frame = cap.read()
+            if ret == True:
+                cv2.imshow("video", frame)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+            else:
+                break
+    mus = Thread(target=music)
+    mus.start()
+    vid()
+    # Cutting off the video and audio
+    cap.release()
+    cv2.destroyAllWindows
+
+# Menu display that allows the user to see the options
+def menu_display():
+    # The display with six options and an exit feature
+    print("""
+-------------------------------
+1. About Me ------------------> 
+2. Passion for Robotics ------>
+3. Participation in Sports --->
+4. Interest in Music ---------> 
+5. Passion for Coding --------> 
+6. Love of Volunteering ------>  
+7. Exit ---------------------->
+-------------------------------
+""")
+
+# Function that takes in the user's selection and plays the video
+def menu_selection():
+    try:
+        user_choice = int(
+          input("Please choose an integer from 1 to 7 to know more about my goals, passions, and hobbies: "))
+    except:
+        user_choice = 0
+    if user_choice == 1:
+        about_me()
+    elif user_choice == 2:
+        passion_for_robotics()
+    elif user_choice == 3:
+        participation_in_sports()
+    elif user_choice == 4:
+        interest_in_music()
+    elif user_choice == 5:
+        passion_for_coding()
+    elif user_choice == 6:
+        love_of_volunteering()
+    elif user_choice == 7:
+        # Exit the program
+        global isUsed
+        isUsed = False
+        print("\nThank you for using the program! Goodbye!\n")
+    else:
+        print("\nSorry, I do not believe that the option you selected was available. Please try again!")
+
+# Option 1
+def about_me():
+    print("You selected: INTRODUCTION")
+    video_audio("Introduction-LASA.mp4", "Introduction-LASA-Audio.wav")
+# Option 2
+def passion_for_robotics():
+    print("You selected: PASSION FOR ROBOTICS")
+    video_audio("Robotics-LASA.mp4", "Robotics-LASA-Audio.wav")
+# Option 3
+def participation_in_sports():
+    print("You selected: PARTICIPATION IN SPORTS")
+    video_audio("Sports-LASA.mp4", "Sports-LASA-Audio.wav")
+# Option 4
+def interest_in_music():
+    print("You selected: INTEREST IN MUSIC")
+    video_audio("Music-LASA.mp4", "Music-LASA-Audio.wav")
+# Option 5
+def passion_for_coding():
+    print("You selected: PASSION FOR CODING")
+    video_audio("Coding-LASA.mp4", "Coding-LASA-Audio.wav")
+# Option 6
+def love_of_volunteering():
+    print("You selected: LOVE OF VOLUNTEERING")
+    video_audio("Volunteering-LASA.mp4", "Volunteering-LASA-Audio.wav")
+
+# Main function that plays the menu and selection
+def main():
+    while isUsed:
+        menu_display()
+        menu_selection()
+
+if __name__ == "__main__":
+    main()
